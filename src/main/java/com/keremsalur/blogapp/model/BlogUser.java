@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -17,8 +18,10 @@ public class BlogUser {
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     
+    @Column(nullable = false, unique = true)
     private String username;
-    
+
+    @Column(nullable = false)
     private String password;
 
 

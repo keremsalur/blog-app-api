@@ -1,6 +1,6 @@
 package com.keremsalur.blogapp.dto;
 
-public class UserDto {
+public class BlogUserDto {
     private String id;
     private String username;
     private String password;

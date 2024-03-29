@@ -1,14 +1,9 @@
 package com.keremsalur.blogapp.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
+public class UpdateBlogUserRequest {
 
-public class CreateUserRequest {
-
-    @NotBlank(message = "Username cannot be blank")
     private String username;
-    @NotBlank(message = "Password cannot be blank")
     private String password;
-
     public String getUsername() {
         return username;
     }
@@ -21,5 +16,4 @@ public class CreateUserRequest {
     public void setPassword(String password) {
         this.password = password;
     }
-    
 }
