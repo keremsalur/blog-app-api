@@ -6,7 +6,7 @@ import com.keremsalur.blogapp.dto.BlogUserDto;
 import com.keremsalur.blogapp.model.BlogUser;
 
 @Component
-public class UserDtoConverter {
+public class BlogUserDtoConverter {
 
     public BlogUserDto convert(BlogUser user) {
         BlogUserDto userDto = new BlogUserDto();

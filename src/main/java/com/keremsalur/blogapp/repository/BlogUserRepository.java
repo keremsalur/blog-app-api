@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.keremsalur.blogapp.model.BlogUser;
 
-public interface UserRepository extends JpaRepository<BlogUser, String> {
+public interface BlogUserRepository extends JpaRepository<BlogUser, String> {
 
 }

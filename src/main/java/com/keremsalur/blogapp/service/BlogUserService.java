@@ -7,20 +7,21 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.keremsalur.blogapp.dto.BlogUserDto;
-import com.keremsalur.blogapp.dto.converter.UserDtoConverter;
+import com.keremsalur.blogapp.dto.converter.BlogUserDtoConverter;
 import com.keremsalur.blogapp.dto.request.CreateBlogUserRequest;
+import com.keremsalur.blogapp.dto.request.PatchBlogUserRequest;
 import com.keremsalur.blogapp.dto.request.UpdateBlogUserRequest;
-import com.keremsalur.blogapp.exception.UserNotFoundException;
+import com.keremsalur.blogapp.exception.BlogUserNotFoundException;
 import com.keremsalur.blogapp.model.BlogUser;
-import com.keremsalur.blogapp.repository.UserRepository;
+import com.keremsalur.blogapp.repository.BlogUserRepository;
 
 @Service
-public class UserService {
+public class BlogUserService {
 
-    private final UserRepository userRepository;
-    private final UserDtoConverter userDtoConverter;
+    private final BlogUserRepository userRepository;
+    private final BlogUserDtoConverter userDtoConverter;
 
-    public UserService(UserRepository userRepository, UserDtoConverter userDtoConverter) {
+    public BlogUserService(BlogUserRepository userRepository, BlogUserDtoConverter userDtoConverter) {
         this.userRepository = userRepository;
         this.userDtoConverter = userDtoConverter;
     }
@@ -39,34 +40,37 @@ public class UserService {
 
     public BlogUserDto getUserById(@NonNull String id) {
         return userDtoConverter.convert(userRepository.findById(id).orElseThrow(
-            () -> new UserNotFoundException("User not found with id: " + id)
+            () -> new BlogUserNotFoundException("User not found with id: " + id)
         ));
     }
 
     public void deleteUserById(@NonNull String id) {
+        userDtoConverter.convert(userRepository.findById(id).orElseThrow(
+            () -> new BlogUserNotFoundException("User not found with id: " + id)
+        ));
         userRepository.deleteById(id);
     }
 
-    public BlogUserDto updateUserById(@NonNull String id, UpdateBlogUserRequest updateBlogUserRequest) {
+    public BlogUserDto patchUserById(@NonNull String id, PatchBlogUserRequest patchBlogUserRequest) {
         BlogUser user = userRepository.findById(id).orElseThrow(
-            () -> new UserNotFoundException("User not found with id: " + id)
+            () -> new BlogUserNotFoundException("User not found with id: " + id)
         );
-        if(updateBlogUserRequest.getUsername() != null) {
-            user.setUsername(updateBlogUserRequest.getUsername());
+        if(patchBlogUserRequest.getUsername() != null) {
+            user.setUsername(patchBlogUserRequest.getUsername());
         }
-        if(updateBlogUserRequest.getPassword() != null) {
-            user.setPassword(updateBlogUserRequest.getPassword());
+        if(patchBlogUserRequest.getPassword() != null) {
+            user.setPassword(patchBlogUserRequest.getPassword());
         }
         userRepository.save(user);
         return userDtoConverter.convert(user);
     }
 
-    public BlogUserDto updateUserById(@NonNull String id, CreateBlogUserRequest createBlogUserRequest) {
+    public BlogUserDto updateUserById(@NonNull String id, UpdateBlogUserRequest updateBlogUserRequest) {
         BlogUser user = userRepository.findById(id).orElseThrow(
-            () -> new UserNotFoundException("User not found with id: " + id)
+            () -> new BlogUserNotFoundException("User not found with id: " + id)
         );
-        user.setUsername(createBlogUserRequest.getUsername());
-        user.setPassword(createBlogUserRequest.getPassword());
+        user.setUsername(updateBlogUserRequest.getUsername());
+        user.setPassword(updateBlogUserRequest.getPassword());
         userRepository.save(user);
         return userDtoConverter.convert(user);
     }

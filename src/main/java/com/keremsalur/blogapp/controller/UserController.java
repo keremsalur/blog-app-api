@@ -18,17 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.keremsalur.blogapp.dto.BlogUserDto;
 import com.keremsalur.blogapp.dto.request.CreateBlogUserRequest;
+import com.keremsalur.blogapp.dto.request.PatchBlogUserRequest;
 import com.keremsalur.blogapp.dto.request.UpdateBlogUserRequest;
-import com.keremsalur.blogapp.service.UserService;
+import com.keremsalur.blogapp.service.BlogUserService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1")
 public class UserController {
-    private final UserService userService;
+    private final BlogUserService userService;
 
-    public UserController(UserService userService) {
+    public UserController(BlogUserService userService) {
         this.userService = userService;
     }
 
@@ -42,13 +43,13 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping
+    @GetMapping("/users")
     public ResponseEntity<Set<BlogUserDto>>getAllUsers(){
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     public ResponseEntity<BlogUserDto>getUserById(
         @NonNull
         @Valid
@@ -57,27 +58,27 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/user/{id}")
     public ResponseEntity<Void>deleteUserById(@NonNull @PathVariable String id){
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PatchMapping("/{id}")
+    @PatchMapping("/user/{id}")
+    public ResponseEntity<BlogUserDto>patchUserById (
+        @NonNull @Valid @PathVariable String id,
+        @Valid @RequestBody PatchBlogUserRequest patchBlogUserRequest
+    ){
+        return ResponseEntity.ok(userService.patchUserById(id,patchBlogUserRequest));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/user/{id}")
     public ResponseEntity<BlogUserDto>updateUserById(
         @NonNull @Valid @PathVariable String id,
         @Valid @RequestBody UpdateBlogUserRequest updateBlogUserRequest
     ){
         return ResponseEntity.ok(userService.updateUserById(id,updateBlogUserRequest));
-    }
-
-    @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/{id}")
-    public ResponseEntity<BlogUserDto>updateUserById(
-        @NonNull @Valid @PathVariable String id,
-        @Valid @RequestBody CreateBlogUserRequest createBlogUserRequest
-    ){
-        return ResponseEntity.ok(userService.updateUserById(id,createBlogUserRequest));
     }
 }
