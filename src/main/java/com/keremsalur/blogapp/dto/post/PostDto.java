@@ -1,9 +1,18 @@
-package com.keremsalur.blogapp.dto;
+package com.keremsalur.blogapp.dto.post;
 
 public class PostDto {
     private String id;
     private String title;
     private byte[] content;
+
+    public PostDto() {}
+
+    public PostDto(String id, String title, byte[] content) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+    }
+
     public String getId() {
         return id;
     }

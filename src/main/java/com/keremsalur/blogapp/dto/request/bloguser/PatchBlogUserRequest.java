@@ -1,12 +1,12 @@
-package com.keremsalur.blogapp.dto.request;
+package com.keremsalur.blogapp.dto.request.bloguser;
 
-import jakarta.validation.constraints.NotBlank;
+import com.keremsalur.blogapp.validation.NotEmptyIfPresent;
 
-public class CreateBlogUserRequest {
+public class PatchBlogUserRequest {
 
-    @NotBlank(message = "Username cannot be blank")
+    @NotEmptyIfPresent(message = "Username cannot be blank if present")
     private String username;
-    @NotBlank(message = "Password cannot be blank")
+    @NotEmptyIfPresent(message = "Password cannot be blank if present")
     private String password;
 
     public String getUsername() {
@@ -21,5 +21,4 @@ public class CreateBlogUserRequest {
     public void setPassword(String password) {
         this.password = password;
     }
-    
 }

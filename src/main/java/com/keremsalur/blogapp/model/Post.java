@@ -9,18 +9,21 @@ import jakarta.persistence.*;
 @Entity
 public class Post {
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
+    @Column(nullable = false)
     private String title;
 
     @Column(columnDefinition = "bytea")
     private byte[] content;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id", nullable = false)
     private BlogUser author;
+
+    public Post() {}
 
     public Post(String id, String title, byte[] content, BlogUser author) {
         this.id = id;

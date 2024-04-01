@@ -9,11 +9,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import com.keremsalur.blogapp.dto.BlogUserDto;
-import com.keremsalur.blogapp.dto.converter.BlogUserDtoConverter;
-import com.keremsalur.blogapp.dto.request.CreateBlogUserRequest;
-import com.keremsalur.blogapp.dto.request.PatchBlogUserRequest;
-import com.keremsalur.blogapp.dto.request.UpdateBlogUserRequest;
+import com.keremsalur.blogapp.dto.bloguser.BlogUserDto;
+import com.keremsalur.blogapp.dto.converter.bloguser.BlogUserDtoConverter;
+import com.keremsalur.blogapp.dto.request.bloguser.CreateBlogUserRequest;
+import com.keremsalur.blogapp.dto.request.bloguser.PatchBlogUserRequest;
+import com.keremsalur.blogapp.dto.request.bloguser.UpdateBlogUserRequest;
 import com.keremsalur.blogapp.exception.BlogUserNotFoundException;
 import com.keremsalur.blogapp.model.BlogUser;
 import com.keremsalur.blogapp.repository.BlogUserRepository;
@@ -46,7 +46,7 @@ public class BlogUserServiceTest {
 
         // when
         Mockito.when(blogUserRepository.save(any(BlogUser.class))).thenReturn(new BlogUser());
-        Mockito.when(blogUserDtoConverter.convert(any(BlogUser.class))).thenReturn(testUserDto);
+        Mockito.when(blogUserDtoConverter.convertToDto(any(BlogUser.class))).thenReturn(testUserDto);
         BlogUserDto result = blogUserService.createUser(testRequest);
 
         // then
@@ -65,7 +65,7 @@ public class BlogUserServiceTest {
 
         // when
         Mockito.when(blogUserRepository.findAll()).thenReturn(testBlogUsers);
-        Mockito.when(blogUserDtoConverter.convert(any(BlogUser.class)))
+        Mockito.when(blogUserDtoConverter.convertToDto(any(BlogUser.class)))
             .thenReturn(new BlogUserDto("id1", "username1", "password1"))
             .thenReturn(new BlogUserDto("id2", "username2", "password2"));
         
@@ -85,7 +85,7 @@ public class BlogUserServiceTest {
 
         // when
         Mockito.when(blogUserRepository.findById("id")).thenReturn(Optional.of(testUser));
-        Mockito.when(blogUserDtoConverter.convert(any(BlogUser.class))).thenReturn(testUserDto);
+        Mockito.when(blogUserDtoConverter.convertToDto(any(BlogUser.class))).thenReturn(testUserDto);
         BlogUserDto result = blogUserService.getUserById("id");
 
         // then
@@ -140,7 +140,7 @@ public class BlogUserServiceTest {
         // when
         Mockito.when(blogUserRepository.findById("id")).thenReturn(Optional.of(testBlogUser));
         Mockito.when(blogUserRepository.save(any(BlogUser.class))).thenReturn(updatedTestBlogUser);
-        Mockito.when(blogUserDtoConverter.convert(updatedTestBlogUser)).thenReturn(updatedBlogUserDto);
+        Mockito.when(blogUserDtoConverter.convertToDto(updatedTestBlogUser)).thenReturn(updatedBlogUserDto);
 
         BlogUserDto result = blogUserService.updateUserById("id", testRequest);
 
@@ -172,7 +172,7 @@ public class BlogUserServiceTest {
         // when
         Mockito.when(blogUserRepository.findById("id")).thenReturn(Optional.of(testBlogUser));
         Mockito.when(blogUserRepository.save(any(BlogUser.class))).thenReturn(patchedTestBlogUser);
-        Mockito.when(blogUserDtoConverter.convert(patchedTestBlogUser)).thenReturn(patchedBlogUserDto);
+        Mockito.when(blogUserDtoConverter.convertToDto(patchedTestBlogUser)).thenReturn(patchedBlogUserDto);
 
         BlogUserDto result = blogUserService.patchUserById("id", testRequest);
 

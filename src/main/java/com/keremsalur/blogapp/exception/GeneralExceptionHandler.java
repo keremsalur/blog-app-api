@@ -31,4 +31,9 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler{
     public ResponseEntity<?> customerNotFoundExceptionHandler(BlogUserNotFoundException exception){
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(PostNotFoundException.class)
+    public ResponseEntity<?> postNotFoundExceptionHandler(PostNotFoundException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }

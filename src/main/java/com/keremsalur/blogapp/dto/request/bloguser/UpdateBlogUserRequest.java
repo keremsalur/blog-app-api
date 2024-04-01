@@ -1,4 +1,4 @@
-package com.keremsalur.blogapp.dto.request;
+package com.keremsalur.blogapp.dto.request.bloguser;
 
 import jakarta.validation.constraints.NotBlank;
 

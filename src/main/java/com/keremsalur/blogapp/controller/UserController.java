@@ -16,16 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.keremsalur.blogapp.dto.BlogUserDto;
-import com.keremsalur.blogapp.dto.request.CreateBlogUserRequest;
-import com.keremsalur.blogapp.dto.request.PatchBlogUserRequest;
-import com.keremsalur.blogapp.dto.request.UpdateBlogUserRequest;
+import com.keremsalur.blogapp.dto.bloguser.BlogUserDto;
+import com.keremsalur.blogapp.dto.request.bloguser.CreateBlogUserRequest;
+import com.keremsalur.blogapp.dto.request.bloguser.PatchBlogUserRequest;
+import com.keremsalur.blogapp.dto.request.bloguser.UpdateBlogUserRequest;
 import com.keremsalur.blogapp.service.BlogUserService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/blog-users")
 public class UserController {
     private final BlogUserService userService;
 
@@ -34,16 +34,14 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/register")
+    @PostMapping("/create")
     public ResponseEntity<BlogUserDto>createUser(
-        @Valid 
-        @RequestBody 
-        CreateBlogUserRequest createUserRequest){
+        @Valid @RequestBody CreateBlogUserRequest createUserRequest){
         return ResponseEntity.ok(userService.createUser(createUserRequest));
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/users")
+    @GetMapping("/all-users")
     public ResponseEntity<Set<BlogUserDto>>getAllUsers(){
         return ResponseEntity.ok(userService.getAllUsers());
     }
@@ -51,9 +49,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/user/{id}")
     public ResponseEntity<BlogUserDto>getUserById(
-        @NonNull
-        @Valid
-        @PathVariable String id){
+        @NonNull @Valid @PathVariable String id){
         return ResponseEntity.ok(userService.getUserById(id));
     }
 

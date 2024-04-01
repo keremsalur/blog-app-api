@@ -1,4 +1,4 @@
-package com.keremsalur.blogapp.dto;
+package com.keremsalur.blogapp.dto.bloguser;
 
 public class BlogUserDto {
     private String id;
